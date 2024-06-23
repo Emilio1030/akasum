@@ -30,7 +30,9 @@ class StreamHandler(BaseCallbackHandler):
 # Retrieval handler
 class PrintRetrievalHandler(BaseCallbackHandler):
     def __init__(self, container, msgs, calculate_similarity=False):
-        self.status = container.status("**Context Retrieval**")
+        # self.status = container.status("**Context Retrieval**")
+        # self.msgs = msgs
+        self.container = container
         self.msgs = msgs
         self.embeddings = embeddings_model
         self.calculate_similarity = calculate_similarity

@@ -1,6 +1,7 @@
 import os
 import re
 import streamlit as st
+import ipdb
 
 from common.utils import (
     StreamHandler,
@@ -28,6 +29,7 @@ from langchain_community.document_loaders import PDFMinerLoader
 from langchain_community.document_loaders import TextLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 
+# ipdb.set_trace()
 
 def load_document(uploaded_file):
     with open(uploaded_file.name, "wb") as f:
@@ -128,6 +130,7 @@ def main():
                 namespace=namespace,
             )
             index = pc.Index("streamlit")
+
             try:
                 index.delete(delete_all=True, namespace=namespace)
             except Exception as e:
