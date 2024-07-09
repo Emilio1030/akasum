@@ -61,3 +61,10 @@ huggingface-hub==0.23.0
 pdfminer.six
 langchain-core
 htbuilder
+
+opencv-python
+unstructured_inference
+tesseract-ocr
+
+tiktoken
+pytesseract
