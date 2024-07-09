@@ -2,8 +2,8 @@ import os
 import re
 import streamlit as st
 import ipdb
+from PIL import Image
 import pytesseract
-
 
 
 
