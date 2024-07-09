@@ -47,7 +47,7 @@ wheel>=0.29
 
 ### For streamlit app run
 #streamlit
-Pillow
+#Pillow
 streamlit==1.25.0
 #pysqlite3-binary
 
@@ -65,7 +65,7 @@ htbuilder
 
 opencv-python
 unstructured_inference
-tesseract-ocr
+#tesseract-ocr
 
 tiktoken
 pytesseract
