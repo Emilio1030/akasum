@@ -7,12 +7,25 @@ import ipdb
 
 
 
-from ...common.utils import (
-    StreamHandler,
-    PrintRetrievalHandler,
-    DocProcessStreamHandler,
-    embeddings_model,
-)
+# from ...common.utils import (
+#     StreamHandler,
+#     PrintRetrievalHandler,
+#     DocProcessStreamHandler,
+#     embeddings_model,
+# )
+
+from akasum.common.utils import *
+
+# (
+
+#     StreamHandler,
+#     PrintRetrievalHandler,
+#     DocProcessStreamHandler,
+#     embeddings_model,
+# )
+
+
+
 
 from common.prompt import summary_prompt
 from common.sidebar import sidebar_content
@@ -74,7 +87,6 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 #         documents_content = '\n'.join(doc.page_content for doc in documents)
 #     else:
 #         documents_content = f"Unsupported file type: {file_type}"
-
 #     return documents_content
 
 
