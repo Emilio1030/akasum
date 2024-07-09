@@ -14,7 +14,7 @@ import ipdb
 #     embeddings_model,
 # )
 
-from akasum.common.utils import *
+from akasum.akasum.common.utils import *
 
 
 # (
