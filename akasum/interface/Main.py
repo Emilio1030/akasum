@@ -2,6 +2,10 @@ import os
 import re
 import streamlit as st
 import ipdb
+import pytesseract
+
+
+
 
 from common.utils import (
     StreamHandler,
@@ -13,6 +17,7 @@ from common.utils import (
 from common.prompt import summary_prompt
 from common.sidebar import sidebar_content
 from common.chat_history import display_chat_history, clear_chat_history, convert_df
+
 
 from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
@@ -26,26 +31,78 @@ from langchain_community.chat_message_histories import StreamlitChatMessageHisto
 from langchain_pinecone import PineconeVectorStore
 from pinecone import Pinecone
 from langchain_community.document_loaders import PDFMinerLoader
+from langchain_community.document_loaders import PyPDFium2Loader
+from langchain_community.document_loaders import PyMuPDFLoader
+from langchain.document_loaders import PyPDFLoader
 from langchain_community.document_loaders import TextLoader
+from langchain_community.document_loaders.image import UnstructuredImageLoader
+from langchain.document_loaders import UnstructuredFileLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 
-# ipdb.set_trace()
+from filetype import guess
+import tempfile
 
-def load_document(uploaded_file):
+# for images or scanned pdfs
+## stardef detect_document_type(document_path):
+
+
+def detect_document_type(uploaded_file):
     with open(uploaded_file.name, "wb") as f:
         f.write(uploaded_file.getvalue())
+    guess_file = guess(uploaded_file)
+    file_type = ""
+    image_types = ['jpg', 'jpeg', 'png', 'gif']
+
+    if guess_file.extension.lower() == "pdf":
+        file_type = "pdf"
+    elif guess_file.extension.lower() in image_types:
+        file_type = "image"
+    else:
+        file_type = "unknown"
+
+    return file_type
+
+# def extract_file_image(uploaded_file):
+#     with open(uploaded_file.name, "wb") as f:
+#         f.write(uploaded_file.getvalue())
+
+#     file_type = detect_document_type(uploaded_file.name)
+
+#     if file_type == "image":
+#         loader = UnstructuredImageLoader(file_type)
+#         documents = loader.load()
+#         documents_content = '\n'.join(doc.page_content for doc in documents)
+#     else:
+#         documents_content = f"Unsupported file type: {file_type}"
+
+#     return documents_content
+
+
+def load_document(uploaded_file):
+
+    with open(uploaded_file.name, "wb") as f:
+        f.write(uploaded_file.getvalue())
+
+    file_type = detect_document_type(uploaded_file)
+
+
     if uploaded_file.name.endswith(".pdf"):
-        return PDFMinerLoader(uploaded_file.name, concatenate_pages=True)
+        #return PDFMinerLoader(uploaded_file.name, concatenate_pages=True)
+        return UnstructuredFileLoader(uploaded_file.name)
     elif uploaded_file.name.endswith(".docx"):
         return Docx2txtLoader(uploaded_file.name)
     elif uploaded_file.name.endswith(".txt"):
         return TextLoader(uploaded_file.name)
+
+    elif (file_type == "image"):
+        return UnstructuredImageLoader(uploaded_file.name)
+
     else:
         raise ValueError(
             "Unsupported file format. Please upload a file in a supported format."
         )
-
-
+# pdfs
+## start ####
 def text_split_fn(loaded_doc):
     text_splitter = RecursiveCharacterTextSplitter(
         chunk_size=1000,
@@ -54,7 +111,19 @@ def text_split_fn(loaded_doc):
     )
 
     return text_splitter.split_documents(loaded_doc)
+## end ###
 
+# images
+## start ####
+def text_split_fn_images(uploaded_file):
+    text_splitter = RecursiveCharacterTextSplitter(
+        chunk_size=1000,
+        chunk_overlap=100,
+        length_function=len,
+    )
+
+    return text_splitter.split_documents(uploaded_file)
+## end ###
 
 def setup_llm(use_anthropic, model_name):
     if use_anthropic:
@@ -93,8 +162,10 @@ def main():
     st.write("Click the button in the sidebar to summarize.")
     # Setup uploader
     uploaded_file = st.file_uploader(
-        label="Upload your own PDF, DOCX, or TXT file. Do NOT upload files that contain confidential or private information.",
-        type=["pdf", "docx", "txt"],
+        # label="Upload your own PDF, DOCX, or TXT file. Do NOT upload files that contain confidential or private information.",
+        # type=["pdf", "docx", "txt"],
+        label="Upload your own PDF, DOCX, TXT, or image file (PNG, JPG, JPEG). Do NOT upload files that contain confidential or private information.",
+        type=["pdf", "docx", "txt", "png", "jpg", "jpeg"],
         accept_multiple_files=False,
         help="Pictures or charts in the document are not recognized",
     )
@@ -117,9 +188,9 @@ def main():
 
     if st.session_state.curr_file != st.session_state.prev_file:
         with st.spinner("Extracting text and converting to embeddings..."):
+
             loader = load_document(uploaded_file)
             st.session_state.loaded_doc = loader.load()
-
             splits = text_split_fn(st.session_state.loaded_doc)
 
             namespace = re.sub(r"[^a-zA-Z0-9 \n\.]", "_", st.session_state.curr_file)
