@@ -2,8 +2,8 @@ import os
 import re
 import streamlit as st
 import ipdb
-from PIL import Image
-import pytesseract
+# from PIL import Image
+# import pytesseract
 
 
 
@@ -39,28 +39,28 @@ from langchain_community.document_loaders.image import UnstructuredImageLoader
 from langchain.document_loaders import UnstructuredFileLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 
-from filetype import guess
-import tempfile
+# from filetype import guess
+# import tempfile
 
 # for images or scanned pdfs
 ## stardef detect_document_type(document_path):
 
 
-def detect_document_type(uploaded_file):
-    with open(uploaded_file.name, "wb") as f:
-        f.write(uploaded_file.getvalue())
-    guess_file = guess(uploaded_file)
-    file_type = ""
-    image_types = ['jpg', 'jpeg', 'png', 'gif']
+# def detect_document_type(uploaded_file):
+#     with open(uploaded_file.name, "wb") as f:
+#         f.write(uploaded_file.getvalue())
+#     guess_file = guess(uploaded_file)
+#     file_type = ""
+#     image_types = ['jpg', 'jpeg', 'png', 'gif']
 
-    if guess_file.extension.lower() == "pdf":
-        file_type = "pdf"
-    elif guess_file.extension.lower() in image_types:
-        file_type = "image"
-    else:
-        file_type = "unknown"
+#     if guess_file.extension.lower() == "pdf":
+#         file_type = "pdf"
+#     elif guess_file.extension.lower() in image_types:
+#         file_type = "image"
+#     else:
+#         file_type = "unknown"
 
-    return file_type
+#     return file_type
 
 # def extract_file_image(uploaded_file):
 #     with open(uploaded_file.name, "wb") as f:
@@ -83,9 +83,6 @@ def load_document(uploaded_file):
     with open(uploaded_file.name, "wb") as f:
         f.write(uploaded_file.getvalue())
 
-    file_type = detect_document_type(uploaded_file)
-
-
     if uploaded_file.name.endswith(".pdf"):
         #return PDFMinerLoader(uploaded_file.name, concatenate_pages=True)
         return UnstructuredFileLoader(uploaded_file.name)
@@ -94,8 +91,8 @@ def load_document(uploaded_file):
     elif uploaded_file.name.endswith(".txt"):
         return TextLoader(uploaded_file.name)
 
-    elif (file_type == "image"):
-        return UnstructuredImageLoader(uploaded_file.name)
+    # elif (file_type == "image"):
+    #     return UnstructuredImageLoader(uploaded_file.name)
 
     else:
         raise ValueError(
@@ -113,17 +110,17 @@ def text_split_fn(loaded_doc):
     return text_splitter.split_documents(loaded_doc)
 ## end ###
 
-# images
-## start ####
-def text_split_fn_images(uploaded_file):
-    text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=1000,
-        chunk_overlap=100,
-        length_function=len,
-    )
+# # images
+# ## start ####
+# def text_split_fn_images(uploaded_file):
+#     text_splitter = RecursiveCharacterTextSplitter(
+#         chunk_size=1000,
+#         chunk_overlap=100,
+#         length_function=len,
+#     )
 
-    return text_splitter.split_documents(uploaded_file)
-## end ###
+#     return text_splitter.split_documents(uploaded_file)
+# ## end ###
 
 def setup_llm(use_anthropic, model_name):
     if use_anthropic:
