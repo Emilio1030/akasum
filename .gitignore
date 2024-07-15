@@ -1,5 +1,6 @@
 .env
 akasum/interface/.streamlit/secrets.toml
+akasum/.streamlit/secrets.toml
 .streamlit/secrets.toml
 
 # Byte-compiled / optimized / DLL files
