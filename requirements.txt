@@ -69,4 +69,11 @@ unstructured_inference
 tiktoken
 pytesseract
 pillow_heif
-libgl1
+
+opencv-python-headless
+textblob
+scipy
+numpy
+nltk
+pandas
+scikit-learn
