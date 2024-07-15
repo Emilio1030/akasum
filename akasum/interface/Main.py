@@ -16,7 +16,7 @@ import ipdb
 
 
 
-from common.prompt import summary_prompt
+from .common.prompt import summary_prompt
 from common.sidebar import sidebar_content
 from common.chat_history import display_chat_history, clear_chat_history, convert_df
 
