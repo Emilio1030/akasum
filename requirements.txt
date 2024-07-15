@@ -68,3 +68,4 @@ unstructured_inference
 
 tiktoken
 pytesseract
+pillow_heif
