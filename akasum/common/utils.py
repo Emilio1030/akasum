@@ -2,9 +2,12 @@ import streamlit as st
 import numpy as np
 from langchain.callbacks.base import BaseCallbackHandler
 from langchain_openai import OpenAIEmbeddings
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
+os.environ["OPENAI_API_KEY"] = os.getenv('OPENAI_API_KEY')
 embeddings_model = OpenAIEmbeddings(model="text-embedding-3-large")
-
 
 # Chat model stream handler
 class StreamHandler(BaseCallbackHandler):
