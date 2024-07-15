@@ -4,8 +4,11 @@ import streamlit as st
 import ipdb
 # from PIL import Image
 # import pytesseract
+import sys
+import os
 
-
+# Add the root directory to the Python path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
 
 # from ...common.utils import (
 #     StreamHandler,
@@ -15,12 +18,11 @@ import ipdb
 # )
 
 
+from akasum.common.prompt import summary_prompt
+from akasum.common.sidebar import sidebar_content
+from akasum.common.chat_history import display_chat_history, clear_chat_history, convert_df
 
-from .common.prompt import summary_prompt
-from common.sidebar import sidebar_content
-from common.chat_history import display_chat_history, clear_chat_history, convert_df
-
-from common.utils import (
+from akasum.common.utils import (
 
     StreamHandler,
     PrintRetrievalHandler,
