@@ -44,10 +44,12 @@ from pinecone import Pinecone
 from langchain_community.document_loaders import PDFMinerLoader
 from langchain_community.document_loaders import PyPDFium2Loader
 from langchain_community.document_loaders import PyMuPDFLoader
-from langchain.document_loaders import PyPDFLoader
+#from langchain.document_loaders import PyPDFLoader
+from langchain_community.document_loaders import PyPDFLoader
 from langchain_community.document_loaders import TextLoader
 from langchain_community.document_loaders.image import UnstructuredImageLoader
-from langchain.document_loaders import UnstructuredFileLoader
+#from langchain.document_loaders import UnstructuredFileLoader
+from langchain_community.document_loaders import UnstructuredFileLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 # from filetype import guess

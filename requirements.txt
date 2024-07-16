@@ -78,4 +78,5 @@ nltk
 pandas
 scikit-learn
 #python-poppler
+pdf2image
 poppler-utils
