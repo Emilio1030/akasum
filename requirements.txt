@@ -55,6 +55,12 @@ statsmodels
 unstructured
 markdown
 
+numpy==1.21.2
+scipy
+nltk
+pandas
+scikit-learn
+
 # hugging face
 transformers==4.40.2
 huggingface-hub==0.23.0
@@ -73,12 +79,7 @@ pillow_heif
 #opencv-python-headless
 opencv-python-headless==4.5.4.60
 textblob
-scipy
-numpy
-nltk
-pandas
-scikit-learn
+
 #python-poppler
 pdf2image
 poppler-utils
-numpy==1.21.2
