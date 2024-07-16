@@ -81,3 +81,4 @@ scikit-learn
 #python-poppler
 pdf2image
 poppler-utils
+numpy==1.21.2
