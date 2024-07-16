@@ -80,6 +80,3 @@ scikit-learn
 #python-poppler
 pdf2image
 poppler-utils
-
-libgl1
-libglib2.0-0
