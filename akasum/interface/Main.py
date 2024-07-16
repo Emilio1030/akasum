@@ -49,7 +49,7 @@ from langchain_community.document_loaders import PyPDFLoader
 from langchain_community.document_loaders import TextLoader
 from langchain_community.document_loaders.image import UnstructuredImageLoader
 #from langchain.document_loaders import UnstructuredFileLoader
-#from langchain_community.document_loaders import UnstructuredFileLoader
+from langchain_community.document_loaders import UnstructuredFileLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 # from filetype import guess
