@@ -55,7 +55,9 @@ statsmodels
 unstructured
 markdown
 
-numpy==1.21.2
+
+numpy
+opencv-contrib-python==4.8.1.78
 scipy
 nltk
 pandas
@@ -79,7 +81,6 @@ pillow_heif
 #opencv-python-headless
 opencv-python-headless==4.5.4.60
 textblob
-
 #python-poppler
 pdf2image
 poppler-utils
